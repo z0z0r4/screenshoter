@@ -3,7 +3,7 @@ const { resolve } = require('path')
 require('dotenv').config({ path: resolve(__dirname, '../.env') })
 const puppeteer = require('puppeteer');
 const url = process.env.URL;
-const outputFileName = 'dist/output.png';
+const outputFileName = 'output.png';
 
 async function screenshotPage(url, outputFileName) {
     const browser = await puppeteer.launch({
