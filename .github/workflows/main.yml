@@ -1,0 +1,41 @@
+name: Shot Dashboard
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+
+    - name: Set-up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Chinese font support
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fonts-noto-cjk
+        sudo fc-cache -f -v
+    
+    - name: Run node
+      run: node src/index.js
+
+    - name: Commit result
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git checkout -b output
+        git add output.png
+        git commit -m "update screenshot"
+        git push origin output
