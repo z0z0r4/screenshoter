@@ -36,5 +36,6 @@ jobs:
       with:
         add: 'output.png'
         commit: --signoff
+        default_author: github_actions
         message: 'upd'
         new_branch: output
