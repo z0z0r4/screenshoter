@@ -33,9 +33,9 @@ jobs:
 
     - name: Commit result
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git checkout -b output
         git add output.png
-        git commit -m "update screenshot"
+        git commit -S -m "update screenshot"
         git push origin output
