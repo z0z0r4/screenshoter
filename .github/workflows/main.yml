@@ -32,10 +32,9 @@ jobs:
       run: node src/index.js
 
     - name: Commit result
-      run: |
-        git config --local user.name "github-actions[bot]"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git checkout -b output
-        git add output.png
-        git commit -S -m "update screenshot"
-        git push origin output
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: 'output.png'
+        commit: --signoff
+        message: 'upd'
+        new_branch: output
