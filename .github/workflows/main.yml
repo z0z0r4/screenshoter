@@ -12,11 +12,15 @@ jobs:
   run:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         persist-credentials: false
+        fetch-depth: 0
 
     - name: Set-up Node.js
       uses: actions/setup-node@v3
@@ -35,10 +39,20 @@ jobs:
     - name: Run node
       run: node src/index.js --u=$URL1 --o=$OUTPUT1
 
-    - name: push output
-      uses: crazy-max/ghaction-github-pages@v3.1.0
+    - name: Commit files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -a -m "Upd"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        target_branch: output
-        build_dir: .
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+    # - name: push output
+    #   uses: crazy-max/ghaction-github-pages@v3.1.0
+    #   with:
+    #     target_branch: output
+    #     build_dir: .
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
