@@ -1,4 +1,4 @@
-name: Shot Dashboard
+name: Shot Statistics
 
 on:
   schedule:
@@ -7,7 +7,9 @@ on:
 
 env:
   URL1: 'https://files.mcimirror.top/dashboard'
-  OUTPUT1: 'output.png'
+  URL2: 'https://mod.mcimirror.top/statistics'
+  OUTPUT1: 'output1.png'
+  OUTPUT2: 'output2.png'
 
 jobs:
   run:
@@ -38,23 +40,19 @@ jobs:
         sudo fc-cache -f -v
     
     - name: Run node
-      run: node src/index.js --u=$URL1 --o=$OUTPUT1
+      run: |
+        node src/index.js --u=$URL1 --o=$OUTPUT1
+        node src/index.js --u=$URL2 --o=$OUTPUT2
+
 
     - name: Commit files
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add .
-        git commit -a -m "Upd"
+        git commit -a -m "Update statistics"
 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         branch: ${{ github.ref }}
-    # - name: push output
-    #   uses: crazy-max/ghaction-github-pages@v3.1.0
-    #   with:
-    #     target_branch: output
-    #     build_dir: .
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
