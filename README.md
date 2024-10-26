@@ -1,1 +1,1 @@
-![](https://github.com/WorldHim/screenshoter/raw/output/output.png)
+![](https://github.com/WorldHim/screenshoter/raw/main/output.png)
